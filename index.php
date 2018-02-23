@@ -1,4 +1,7 @@
 <?php
+include("db/connect.php");
+
+$error = "";
 
 if (isset($_POST['submit'])) {
     $firstName = $_POST['first_name'];
@@ -11,6 +14,34 @@ if (isset($_POST['submit'])) {
     $tmp_image = $_FILES['image']['tmp_name']; // temporary image name.
     $imageSize = $_FILES['image']['size']; // image size.
     
+    if (strlen($firstName) < 3) {
+        $error = "First name is too short.";
+    }
+
+    else if (strlen($lastName) < 3) {
+    $error = "Last name is too short.";
+    }
+
+    // Using this to validate the email
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $error = "Please enter a valide email address.";
+    }
+
+    else if (strlen($password) < 8) {
+    $error = "Password must be greater than 8 characters.";
+    }
+
+    else if ($password !== $confirmPassword) {
+    $error = "Password does not match.";
+    }
+
+    else if ($image == "") {
+        $error = "Please upload your image.";
+    }
+
+    else {
+        $error = "Your are successful.";
+    }
 }
 
 
@@ -26,6 +57,7 @@ if (isset($_POST['submit'])) {
         <!--<link rel="author" href="humans.txt">-->
     </head>
     <body>
+        <div id="error"><?php echo $error ?>;</div>
         <div id="wrapper">
         	<div id="formDiv">
         		<!--The enctype allows users to upload files and pictures.-->

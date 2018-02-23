@@ -4,6 +4,10 @@ body {
 	background-color: #CCC;
 }
 
+#error {
+	margin: 0px auto;
+}
+
 #wrapper {
 	width: 1000px;
 	background-color: #FFF;
